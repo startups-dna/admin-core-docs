@@ -65,8 +65,10 @@ import { AdminCoreModule } from '@startupsdna-tools/admin-core';
 @Module({
   imports: [
     AdminCoreModule.forRoot({
-      dev: !process.env.ADMIN_AUTH_PROJECT_ID,
-      projectId: process.env.ADMIN_AUTH_PROJECT_ID || '',
+      auth: {
+        dev: process.env.NODE_ENV === 'development',
+        projectId: process.env.ADMIN_AUTH_PROJECT_ID || '',
+      },
     }),
   ],
 })
@@ -165,8 +167,10 @@ import { permissionsConfig } from './permissions';
 @Module({
   imports: [
     AdminCoreModule.forRoot({
-      /* ... */
-      permissions: permissionsConfig,
+      auth: {
+        /* ... */
+        permissions: permissionsConfig,
+      },
     }),
   ],
 })
