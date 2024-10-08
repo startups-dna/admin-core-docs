@@ -134,9 +134,9 @@ const App = () => (
 
 ## Dev Mode
 
-In dev mode auth module works in disbaled mode.
+In dev mode AdminCoreAuth module works in disabled mode - it does't require user authentication/authorization.
 
-Use this env to run in dev mode:
+Use this env to run you app in dev mode:
 
 ```
 ADMIN_AUTH_DEV=true
