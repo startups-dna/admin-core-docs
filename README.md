@@ -37,6 +37,26 @@ npm install @startupsdna-tools/admin-core-ui
 
 ## Backend Integration
 
+### Set base url
+
+Set global prefix for your app in `main.ts`:
+
+```typescript
+const app = await NestFactory.create(AppModule);
+app.setGlobalPrefix('/app-cms/api');
+```
+
+Set config for serving static files:
+
+```typescript
+ServeStaticModule.forRoot({
+  rootPath: process.cwd() + '/dist/apps/admin-ui',
+  serveRoot: '/app-cms',
+  renderPath: '/*',
+}),
+```
+
+
 ### Add cookie parser
 
 Add cookie parser package to your backend:
@@ -66,7 +86,7 @@ import { AdminCoreModule } from '@startupsdna-tools/admin-core';
   imports: [
     AdminCoreModule.forRoot({
       auth: {
-        dev: process.env.NODE_ENV === 'development',
+        dev: process.env.ADMIN_AUTH_DEV === 'true',
         projectId: process.env.ADMIN_AUTH_PROJECT_ID || '',
       },
     }),
@@ -103,13 +123,24 @@ import { Admin } from '@startupsdna-tools/admin-core-ui';
 
 const App = () => (
   <Admin
-    dev={import.meta.env.MODE === 'development'}
+    dev={import.meta.env.VITE_ADMIN_AUTH_DEV === 'true'}
     title="CMS"
     {/* ... your other props */}
   >
     {/* ... your other components */}
   </Admin>
 );
+```
+
+## Dev Mode
+
+In dev mode auth module works in disbaled mode.
+
+Use this env to run in dev mode:
+
+```
+ADMIN_AUTH_DEV=true
+VITE_ADMIN_AUTH_DEV=true
 ```
 
 ## Permissions
